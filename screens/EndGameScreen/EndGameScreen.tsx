@@ -1,5 +1,5 @@
 import React, {useContext, useEffect} from 'react';
-import {Button, FlatList, ImageBackground, Pressable, StyleSheet, Text, View} from "react-native";
+import {Button, ImageBackground, Pressable, StyleSheet, View} from "react-native";
 // @ts-ignore
 import Image from "../../assets/background.png";
 import Title from "../../components/utilities/Title/Title";
@@ -28,7 +28,6 @@ const EndGameScreen = ({navigation}: any) => {
         }
     }, [startGame])
 
-
     return (
 
         <ImageBackground source={Image} resizeMode="cover" style={styles.image}>
@@ -53,7 +52,7 @@ const styles = StyleSheet.create({
     },
     restartBtn: {
         alignItems: "center",
-        flexDirection: 'column',
+        flexDirection: 'row',
         justifyContent: 'center'
     }
 });

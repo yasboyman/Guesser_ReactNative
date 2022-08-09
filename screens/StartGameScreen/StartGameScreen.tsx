@@ -14,19 +14,12 @@ const StartGameScreen = ({ navigation }: any) => {
     // const [userNumber, setUserNumber] = useState<number>()
     const [confirmed, setConfirmed] = useState<boolean>()
 
-    const {state, dispatch} = useContext(AppContext)
+    const { state, dispatch } = React.useContext(AppContext)
     const {userNumber, startGame} = state
-
-    console.log('THIS CONTEXT:', state)
-    console.log('THIS startGame:', startGame)
-
 
     const confirmedValue = useMemo( () => {
         return {confirmed};
     },[confirmed])
-
-    console.log('CONFIRMED VALUE    :', confirmedValue)
-
 
     useEffect(() => {
         dispatch({type: 'START' })
@@ -38,7 +31,6 @@ const StartGameScreen = ({ navigation }: any) => {
     return (
         <View style={styles.container}>
             <ImageBackground source={image} resizeMode="cover" style={styles.image}>
-                {/*<AppModal modalOn={modal} setModal={setModal}/>*/}
                 <Text style={styles.textTitle}>Guess My Number</Text>
                 <StatusBar style="light"/>
                 <View style={styles.inputContainer}>

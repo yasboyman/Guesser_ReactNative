@@ -1,7 +1,17 @@
 import React, {useState} from 'react';
 import {Alert, Button, StyleSheet, TextInput, View} from "react-native";
 
-const NumberInput = ({ userInput, setUserInput, confirmed }: any) => {
+ type ActionType = {
+    type: string,
+    payload: number
+}
+
+type NumberInputProps = {
+    setUserInput: React.Dispatch<ActionType>,
+    confirmed:  React.Dispatch<React.SetStateAction<boolean | undefined>>;
+}
+
+const NumberInput = ({ setUserInput, confirmed }: NumberInputProps) => {
 
     const [showButtons, setShowButtons] = useState<boolean>(true)
      const [input, setInput] = useState<string| null>(null)
