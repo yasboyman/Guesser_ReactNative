@@ -1,20 +1,67 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import {StatusBar} from 'expo-status-bar';
+import {
+    Button,
+    ImageBackground,
+    InputAccessoryView, SafeAreaView,
+    StyleSheet,
+    Text,
+    TextInput,
+    View
+} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+
+import StartGameScreen from "./screens/StartGameScreen/StartGameScreen";
+import GameScreen from "./screens/GameScreen/GameScreen";
+import EndGameScreen from "./screens/EndGameScreen/EndGameScreen";
+import {AppProvider} from "./context/AppContext";
+
+type RootStackParamList = {
+    Home: undefined;
+    GameScreen: { userNumber: string };
+    EndGameScreen:  undefined;
+};
+
+const App = () => {
+    const Stack = createNativeStackNavigator<RootStackParamList>();
+    return (
+        <SafeAreaView style={{ flex: 1 }}>
+            <AppProvider>
+                <NavigationContainer>
+                    <Stack.Navigator initialRouteName="Home">
+                            <Stack.Screen
+                                name="Home" component={StartGameScreen}
+                                options={{
+                                    title: 'Start',
+                                    headerStyle: {
+                                        backgroundColor: '#7974c8',
+                                    },
+                                    headerTintColor: '#fff',
+                                    headerTitleStyle: {
+                                        fontWeight: 'bold',
+                                    },
+                                }}
+                            />
+                            <Stack.Screen name="GameScreen" component={GameScreen}/>
+                            <Stack.Screen name="EndGameScreen" component={EndGameScreen}/>
+                    </Stack.Navigator>
+                </NavigationContainer>
+            </AppProvider>
+        </SafeAreaView>
+    );
 }
+export default App
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+    container: {
+         alignItems: 'center', justifyContent: 'center', flexDirection: 'column',
+    },
+    image: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: 'center',
+        width: '100%',
+        opacity: 0.9
+    },
+})
