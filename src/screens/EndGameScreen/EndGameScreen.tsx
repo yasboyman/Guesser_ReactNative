@@ -3,41 +3,39 @@ import {Button, ImageBackground, Pressable, StyleSheet, View} from "react-native
 // @ts-ignore
 import Image from "../../assets/background.png";
 import Title from "../../components/utilities/Title/Title";
-import AppContext from "../../context/AppContext";
+import AppContext from "../../../context/AppContext";
 import {Entypo} from '@expo/vector-icons';
-
 import AppButton from "../../components/utilities/Button/AppButton";
+
+const GameOverImg = require('../../assets/GameOverImg.png')
 
 
 const EndGameScreen = ({navigation}: any) => {
 
     const {state, dispatch} = useContext(AppContext)
     const {
-        computerGuess,
-        isGameOver,
-        isUserLying,
-        reset,
         startGame,
-        userNumber
+        restartGame,
     } = state;
 
     useEffect(() => {
-        if (startGame) {
+        if (restartGame) {
             dispatch({type: "RESET"})
             return navigation.navigate('Home')
         }
-    }, [startGame])
+    }, [restartGame])
+    console.log(state)
 
     return (
-
         <ImageBackground source={Image} resizeMode="cover" style={styles.image}>
             <View>
                 <Title>GAME OVER</Title>
+                <Image src={GameOverImg} alt={"game over image"}/>
                 <View style={styles.restartBtn}>
-                    <Pressable onPress={() => dispatch({type: "START"})}>
-                        <Button title={"Restart"}/>
-                        <Entypo name="cycle" size={24} color="white"/>
-                    </Pressable>
+                    {/*<Pressable onPress={() => dispatch({type: "RESTART"})}>*/}
+                        <Button onPress={() => dispatch({type: "RESTART"})} title={"Restart"}/>
+                        {/*<Entypo name="cycle" size={24} color="white"/>*/}
+                    {/*</Pressable>*/}
                 </View>
             </View>
         </ImageBackground>

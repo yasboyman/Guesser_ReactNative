@@ -1,32 +1,27 @@
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {ImageBackground, StyleSheet, Text, View} from "react-native";
-
-// @ts-ignore
-import image  from '../../assets/background.png';
 import {StatusBar} from "expo-status-bar";
 import NumberInput from "../../components/NumberInput";
-import AppButton from "../../components/utilities/Button/AppButton";
 import GameScreen from "../GameScreen/GameScreen";
-import AppContext from "../../context/AppContext";
+import AppContext from "../../../context/AppContext";
+
+const image =  require('../../assets/background.png')
 
 
 const StartGameScreen = ({ navigation }: any) => {
-    // const [userNumber, setUserNumber] = useState<number>()
     const [confirmed, setConfirmed] = useState<boolean>()
-
     const { state, dispatch } = React.useContext(AppContext)
-    const {userNumber, startGame} = state
+    const {startGame} = state
 
     const confirmedValue = useMemo( () => {
         return {confirmed};
     },[confirmed])
 
     useEffect(() => {
-        dispatch({type: 'START' })
+         confirmedValue?.confirmed && dispatch({type: 'START' })
         startGame && navigation.navigate('GameScreen')
         setConfirmed(false)
     }, [confirmedValue])
-
 
     return (
         <View style={styles.container}>

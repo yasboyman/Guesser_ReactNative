@@ -12,9 +12,9 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 
-import StartGameScreen from "./screens/StartGameScreen/StartGameScreen";
-import GameScreen from "./screens/GameScreen/GameScreen";
-import EndGameScreen from "./screens/EndGameScreen/EndGameScreen";
+import StartGameScreen from "./src/screens/StartGameScreen/StartGameScreen";
+import GameScreen from "./src/screens/GameScreen/GameScreen";
+import EndGameScreen from "./src/screens/EndGameScreen/EndGameScreen";
 import {AppProvider} from "./context/AppContext";
 
 type RootStackParamList = {
