@@ -1,22 +1,15 @@
 import React, {useContext, useEffect} from 'react';
-import {Button, ImageBackground, Pressable, StyleSheet, View} from "react-native";
+import {Button, ImageBackground, Pressable, StyleSheet, View, Image} from "react-native";
 // @ts-ignore
-import Image from "../../assets/background.png";
 import Title from "../../components/utilities/Title/Title";
 import AppContext from "../../../context/AppContext";
 import {Entypo} from '@expo/vector-icons';
-import AppButton from "../../components/utilities/Button/AppButton";
-
-const GameOverImg = require('../../assets/GameOverImg.png')
 
 
 const EndGameScreen = ({navigation}: any) => {
 
     const {state, dispatch} = useContext(AppContext)
-    const {
-        startGame,
-        restartGame,
-    } = state;
+    const {restartGame,} = state;
 
     useEffect(() => {
         if (restartGame) {
@@ -27,15 +20,15 @@ const EndGameScreen = ({navigation}: any) => {
     console.log(state)
 
     return (
-        <ImageBackground source={Image} resizeMode="cover" style={styles.image}>
+        <ImageBackground source={require("../../assets/background.png")} resizeMode="cover" style={styles.image}>
             <View>
                 <Title>GAME OVER</Title>
-                <Image src={GameOverImg} alt={"game over image"}/>
+                <View style={styles.gameOverImageContainer}>
+                    <Image source={require('../../assets/trans-game-over.png')} style={styles.gameOverImage}/>
+                </View>
+
                 <View style={styles.restartBtn}>
-                    {/*<Pressable onPress={() => dispatch({type: "RESTART"})}>*/}
-                        <Button onPress={() => dispatch({type: "RESTART"})} title={"Restart"}/>
-                        {/*<Entypo name="cycle" size={24} color="white"/>*/}
-                    {/*</Pressable>*/}
+                    <Button onPress={() => dispatch({type: "RESTART"})} title={"Restart"}/>
                 </View>
             </View>
         </ImageBackground>
@@ -47,10 +40,30 @@ export default EndGameScreen;
 const styles = StyleSheet.create({
     image: {
         flex: 1,
+        alignItems: 'center'
     },
     restartBtn: {
         alignItems: "center",
         flexDirection: 'row',
         justifyContent: 'center'
+    },
+    gameOverImageContainer: {
+        width: 200,
+        height: 200,
+        borderRadius: 100,
+        alignItems: 'center',
+        margin: 30,
+        borderWidth: 3,
+        backgroundColor: '#e3e3e3',
+        overflow: 'hidden',
+        padding: 10,
+        marginTop: -20
+    },
+    gameOverImage: {
+        flex: 1,
+        width: '85%',
+        height: '100%',
+        resizeMode: 'contain',
+        transform: [{rotate: '-30deg'}]
     }
 });

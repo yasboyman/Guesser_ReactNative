@@ -6,6 +6,16 @@ interface TodoContext {
     setUserNumber?: React.Dispatch<React.SetStateAction<number[]>>
 }
 
+type StateType = {
+    userNumber: number,
+    computerGuess: number,
+    isGameOver: boolean,
+    isUserLying: boolean,
+    startGame: boolean,
+    reset: boolean,
+    restartGame: boolean,
+}
+
 const initialState = {
     userNumber: null,
     computerGuess: null,
@@ -16,7 +26,12 @@ const initialState = {
     restartGame: false,
 };
 
-const reducer = (state, action) => {
+type ListAction = {
+    type: "USERNUMBER" | "START" | "GUESS" | "GAMEOVER" | "RESTART" | "RESET" ;
+    payload?: number | boolean | StateType
+};
+
+const reducer = (state: StateType, action: ListAction) => {
     switch (action.type) {
         case 'USERNUMBER':
             return {...state, userNumber: action.payload}
@@ -48,6 +63,7 @@ const AppContext = React.createContext<any>({} as any)
 export const AppProvider = ({children}: {children: JSX.Element }) => {
     const [userNumber, setUserNumber] = useState<number>(0)
     const [computerGuess, SetComputerGuess] = useState<number>()
+    // @ts-ignore
     const [state, dispatch] = useReducer(reducer, initialState);
 
     const contextValue = useMemo(() => {

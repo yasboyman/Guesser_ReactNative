@@ -1,20 +1,14 @@
 import React, {useState} from 'react';
 import {Alert, Button, StyleSheet, TextInput, View} from "react-native";
 
- type ActionType = {
-    type: string,
-    payload: number
-}
+import {NumberInputProps} from "../types/index.js";
 
-type NumberInputProps = {
-    setUserInput: React.Dispatch<ActionType>,
-    confirmed:  React.Dispatch<React.SetStateAction<boolean | undefined>>;
-}
+
 
 const NumberInput = ({ setUserInput, confirmed }: NumberInputProps) => {
 
     const [showButtons, setShowButtons] = useState<boolean>(true)
-     const [input, setInput] = useState<string| null>(null)
+     const [input, setInput] = useState<string| undefined>('')
 
     const handleConfirm = () => {
         let chosenNum = 0
@@ -83,6 +77,5 @@ const styles = StyleSheet.create({
         padding: 10,
         justifyContent: 'space-between',
         borderRadius: 6,
-        // elevation: 10,
     }
 });

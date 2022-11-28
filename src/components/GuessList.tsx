@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet} from "react-native";
 
-const GuessList = ({number}: any) => {
+const GuessList = ({number}: number ) => {
     return (
         <View style={styles.listItem}>
             <Text>{number}</Text>

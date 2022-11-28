@@ -5,29 +5,21 @@ import AppButton from "../../components/utilities/Button/AppButton";
 
 import Title from "../../components/utilities/Title/Title";
 import GuessList from "../../components/GuessList";
-import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {useNavigation} from "@react-navigation/native";
 import AppContext from "../../../context/AppContext";
 import {generateRandomNum} from "../../components/utilities/RandomNumGenerator/RandomNumGenerator";
+import {GameScreenProps} from "../../types/index.js";
 
 const Image = require("../../assets/background.png")
 
-
-type RootStackParamList = {
-    Home: undefined;
-    GameScreen: { userNumber: number };
-    EndGameScreen: undefined;
-};
-
-type Props = NativeStackScreenProps<RootStackParamList, 'GameScreen'>;
 
 
 let minBoudary = 1
 let maxBoundary = 100
 
 
-const GameScreen = ({route}: Props) => {
-    const [PrevComputerGuess, setPrevComputerGuess] = useState<any[]>([])
+const GameScreen = ({route}: GameScreenProps) => {
+    const [PrevComputerGuess, setPrevComputerGuess] = useState<number[]>([])
     const {state, dispatch} = useContext(AppContext)
     const {
         computerGuess,
@@ -35,7 +27,6 @@ const GameScreen = ({route}: Props) => {
     } = state;
 
     const navigation = useRef(useNavigation());
-
 
     useEffect(() => {
         if (userNumber) {
@@ -54,8 +45,11 @@ const GameScreen = ({route}: Props) => {
     useEffect(() => {
         if (userNumber !== null && userNumber === computerGuess) {
             dispatch({type: "GAMEOVER"})
+            minBoudary = 1
+             maxBoundary = 100
             // @ts-ignore
             return navigation.current.navigate('EndGameScreen');
+
         }
     }, [computerGuess, userNumber])
 
@@ -74,6 +68,7 @@ const GameScreen = ({route}: Props) => {
         dispatch({type: 'GUESS', payload: generateRandomNum(minBoudary, maxBoundary, computerGuess)})
     }
 
+    console.log(minBoudary, maxBoundary)
     return (
         <View style={styles.inputContainer}>
             <ImageBackground source={Image} resizeMode="cover" style={styles.image}>
@@ -91,9 +86,9 @@ const GameScreen = ({route}: Props) => {
                 <View style={styles.prevGuessContainer}>
                     <FlatList
                         data={PrevComputerGuess}
-                        renderItem={(item) => (
-                            <GuessList number={item.item}/>
-                        )}/>
+                        renderItem={(item: any) => {
+                            return item.item !== null && <GuessList number={item.item}/>
+                        }}/>
                 </View>
             </ImageBackground>
         </View>
@@ -105,6 +100,7 @@ export default GameScreen;
 const styles = StyleSheet.create({
     inputContainer: {
         flex: 1,
+        marginTop: '10%'
     },
     computerNum: {
         width: '100%',
